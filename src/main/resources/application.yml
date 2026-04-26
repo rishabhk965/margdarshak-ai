@@ -1,0 +1,74 @@
+spring:
+  application:
+    name: margdarshak-ai
+
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/margdarshak}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+
+server:
+  port: ${PORT:8080}
+
+ai:
+  active-provider: ${AI_PROVIDER:gemini}   # claude | gemini
+
+anthropic:
+  api-key: ${ANTHROPIC_API_KEY:}
+
+gemini:
+  api-key: ${GEMINI_API_KEY:}
+
+whatsapp:
+  verify-token: ${WHATSAPP_VERIFY_TOKEN:my-secret-verify-token}
+  access-token: ${WHATSAPP_ACCESS_TOKEN:}
+  phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:}
+  graph-api-version: ${WHATSAPP_GRAPH_API_VERSION:v25.0}
+
+# Two-tier LLM response cache (Caffeine L1 + Postgres L2).
+# Bump prompt-version whenever a system prompt changes to invalidate every
+# cached row globally without a DB write.
+cache:
+  enabled: ${CACHE_ENABLED:true}
+  prompt-version: ${CACHE_PROMPT_VERSION:v1}
+  ttl:
+    muhurta-hours: ${CACHE_TTL_MUHURTA_HOURS:24}        # day-of-week context drifts daily
+    festival-hours: ${CACHE_TTL_FESTIVAL_HOURS:720}     # 30 days — festival rituals are evergreen
+    explainer-hours: ${CACHE_TTL_EXPLAINER_HOURS:24}    # day-of-week context drifts daily
+    classifier-hours: ${CACHE_TTL_CLASSIFIER_HOURS:720} # 30 days — intent label is phrasing-only
+  caffeine:
+    max-size: ${CACHE_CAFFEINE_MAX_SIZE:10000}
+    expire-after-write-minutes: ${CACHE_CAFFEINE_EXPIRE_MINUTES:60}
+
+logging:
+  level:
+    com.margdarshak.ai: DEBUG
+    org.springframework.web: INFO
+
+# Health check endpoint at /actuator/health (used by Railway/Fly/Render)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+      probes:
+        enabled: true

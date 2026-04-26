@@ -1,0 +1,13 @@
+# railway.toml — Railway.app deployment config.
+# Secrets are managed via the Railway dashboard (Variables tab), NOT in this file.
+# See DEPLOYMENT.md for the full list of variables to set.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 10
+healthcheckPath = "/actuator/health"
+healthcheckTimeout = 30

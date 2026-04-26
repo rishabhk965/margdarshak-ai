@@ -1,0 +1,38 @@
+.git
+.gitignore
+.idea
+.vscode
+.DS_Store
+
+# Build output (will be rebuilt inside container)
+target/
+build/
+*.iml
+
+# Local env - never bake secrets into the image
+.env
+.env.local
+.env.*.local
+
+# Docs (not needed at runtime)
+README.md
+DEPLOYMENT.md
+HELP.md
+*.md
+
+# IDE / OS
+.classpath
+.project
+.settings/
+.factorypath
+.springBeans
+.sts4-cache
+
+# Test reports
+**/surefire-reports/
+**/failsafe-reports/
+
+# Skill / agent metadata
+.cursor/
+.factory/
+.claude/
