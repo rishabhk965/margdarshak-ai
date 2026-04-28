@@ -10,7 +10,7 @@ primary_region = "bom"  # Mumbai - closest to India
 
 [env]
   PORT = "8080"
-  AI_PROVIDER = "gemini"
+  AI_PROVIDER = "groq"
   WHATSAPP_GRAPH_API_VERSION = "v25.0"
 
 [http_service]

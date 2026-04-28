@@ -33,7 +33,10 @@ services:
       DB_PASSWORD: ${DB_PASSWORD:-postgres}
 
       # AI
-      AI_PROVIDER: ${AI_PROVIDER:-gemini}
+      AI_PROVIDER: ${AI_PROVIDER:-groq}
+      GROQ_API_KEY: ${GROQ_API_KEY:-}
+      GROQ_MODEL: ${GROQ_MODEL:-llama-3.3-70b-versatile}
+      GROQ_FAST_MODEL: ${GROQ_FAST_MODEL:-llama-3.1-8b-instant}
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
 

@@ -1,8 +1,8 @@
 package com.margdarshak.ai.service;
 
 /**
- * Abstraction over the LLM provider. Implementations can swap between Claude,
- * OpenAI, or any other backend without changing handler code.
+ * Abstraction over the LLM provider. Implementations can swap between Groq,
+ * Gemini, Claude, or any other backend without changing handler code.
  */
 public interface AiService {
 

@@ -28,7 +28,10 @@ All config lives in **one file**: `.env` (gitignored, never committed).
 | `SPRING_DATASOURCE_URL` | yes | DB host | `jdbc:postgresql://localhost:5432/margdarshak` |
 | `DB_USERNAME` | yes | DB user | `postgres` |
 | `DB_PASSWORD` | yes | DB pass | `postgres` |
-| `AI_PROVIDER` | yes | `gemini` or `claude` | `gemini` |
+| `AI_PROVIDER` | yes | `groq`, `gemini`, or `claude` | `groq` |
+| `GROQ_API_KEY` | if AI_PROVIDER=groq | [console.groq.com/keys](https://console.groq.com/keys) | `gsk_...` |
+| `GROQ_MODEL` | no | Override main chat model | `llama-3.3-70b-versatile` |
+| `GROQ_FAST_MODEL` | no | Override intent classifier model | `llama-3.1-8b-instant` |
 | `GEMINI_API_KEY` | if AI_PROVIDER=gemini | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) | `AIza...` |
 | `ANTHROPIC_API_KEY` | if AI_PROVIDER=claude | [console.anthropic.com](https://console.anthropic.com) | `sk-ant-...` |
 | `WHATSAPP_PHONE_NUMBER_ID` | yes | Meta App > WhatsApp > API Setup | `1123282547526392` |
@@ -110,8 +113,8 @@ The repo includes a `Dockerfile`, so any container-friendly platform works. Here
    SPRING_DATASOURCE_URL=jdbc:postgresql://${{Postgres.PGHOST}}:${{Postgres.PGPORT}}/${{Postgres.PGDATABASE}}
    DB_USERNAME=${{Postgres.PGUSER}}
    DB_PASSWORD=${{Postgres.PGPASSWORD}}
-   AI_PROVIDER=gemini
-   GEMINI_API_KEY=<your key>
+   AI_PROVIDER=groq
+   GROQ_API_KEY=<your key>
    WHATSAPP_PHONE_NUMBER_ID=1123282547526392
    WHATSAPP_ACCESS_TOKEN=<your permanent token>
    WHATSAPP_VERIFY_TOKEN=margdarshak-verify-2026
@@ -136,8 +139,8 @@ flyctl postgres attach margdarshak-db
 
 # Set the rest of your secrets
 flyctl secrets set \
-  AI_PROVIDER=gemini \
-  GEMINI_API_KEY=<your key> \
+  AI_PROVIDER=groq \
+  GROQ_API_KEY=<your key> \
   WHATSAPP_PHONE_NUMBER_ID=1123282547526392 \
   WHATSAPP_ACCESS_TOKEN=<your permanent token> \
   WHATSAPP_VERIFY_TOKEN=margdarshak-verify-2026 \
@@ -280,7 +283,7 @@ Ask if you want any of these implemented.
 
 ### App fails to start with "no AI provider key"
 
-- `AiConfig` validates that the active provider's key is set. Check `AI_PROVIDER` and the matching `*_API_KEY` are both present.
+- `AiConfig` validates that the active provider's key is set. Check `AI_PROVIDER` and the matching key (`GROQ_API_KEY`, `GEMINI_API_KEY`, or `ANTHROPIC_API_KEY`) are both present.
 
 ### Database connection fails on Railway/Fly
 

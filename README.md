@@ -34,14 +34,21 @@ The app supports multiple LLM backends. Switch between them by setting **one env
 
 ### Supported Providers
 
-| Provider | Models used | Free tier | Get a key |
-|----------|------------|-----------|-----------|
-| **Gemini** (default) | `gemini-2.0-flash`, `gemini-2.0-flash-lite` | 15 RPM, 1500 req/day | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
+| Provider | Models used (defaults) | Free tier | Get a key |
+|----------|------------------------|-----------|-----------|
+| **Groq** (default) | `llama-3.3-70b-versatile`, `llama-3.1-8b-instant` | Generous developer free tier (see Groq docs) | [console.groq.com/keys](https://console.groq.com/keys) |
+| **Gemini** | `gemini-2.0-flash`, `gemini-2.5-flash-lite` | 15 RPM, 1500 req/day | [aistudio.google.com/apikey](https://aistudio.google.com/apikey) |
 | **Claude** | `claude-sonnet-4-5`, `claude-haiku-4-5` | Paid only | [console.anthropic.com](https://console.anthropic.com) |
 
 ### Switching Providers
 
-**Use Gemini (free, default):**
+**Use Groq (default):**
+```bash
+export AI_PROVIDER=groq
+export GROQ_API_KEY=your-groq-key
+```
+
+**Use Gemini:**
 ```bash
 export AI_PROVIDER=gemini
 export GEMINI_API_KEY=your-gemini-key
@@ -55,9 +62,11 @@ export ANTHROPIC_API_KEY=your-anthropic-key
 
 Only the active provider's key is required. The other can be left unset.
 
+Optional Groq overrides: `GROQ_MODEL`, `GROQ_FAST_MODEL` (see [Groq models](https://console.groq.com/docs/models)).
+
 ### Adding a New Provider
 
-1. Create a class implementing `AiService` (see `GeminiAiService` or `ClaudeAiService`)
+1. Create a class implementing `AiService` (see `GroqAiService`, `GeminiAiService`, or `ClaudeAiService`)
 2. Add a new `case` in `AiConfig.aiService()` factory method
 3. Add the API key property to `application.yml`
 
